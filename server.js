@@ -2,7 +2,6 @@ const express = require("express");
 const mongoose=require("mongoose");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-//const cookieSession = require("cookie-session");
 var session = require('express-session');
 require('dotenv').config();
 const app = express();
@@ -26,10 +25,9 @@ db.once('open', () => {
 
 app.use(cors());
 app.set("view engine", "ejs");
+
 /**** Middlewares*****/
 
-// parse requests of content-type - application/json
-//app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.urlencoded({extended: false}));
@@ -38,15 +36,7 @@ app.use(bodyParser.json());
 // routes
 app.use(require("./routes/authRoute"));
 app.use(require("./routes/userRoute"));
-/*
-app.use(
-  cookieSession({
-    name: "RaFIKI-session",
-    secret: "COOKIE_SECRET", // should use as secret environment variable
-    httpOnly: true
-  })
-);
-*/
+
 
 // Server Configurations 
 app.listen(PORT, function (err) {

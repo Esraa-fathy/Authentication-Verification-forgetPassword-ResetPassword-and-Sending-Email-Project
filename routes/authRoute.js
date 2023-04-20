@@ -31,7 +31,7 @@ else{
     const user = new User({
       username: req.body.username,
       email: req.body.email,
-      password: bcrypt.hashSync(req.body.password, 10),/************** */
+      password: bcrypt.hashSync(req.body.password, 10),
       confirm_password: confirm_password
     })
 // save user data
@@ -75,7 +75,7 @@ else{
       res.status(401).send({ message: "Invalid Password!" });
     }
    
-/********************************* */
+
     var token = jwt.sign({ id: user.id }, process.env.secret, {
       expiresIn: 86400, // 24 hours
     });
@@ -84,14 +84,12 @@ else{
 
  req.session.token = token;
  
-// this block of code must be here before line 142 (as we should send response before assign token value to session token)
     res.status(200).send({
         id: user._id,
         username: user.username,
         email: user.email,
       });
- 
- 
+
        })
   .catch(err => {
     res.status(500).send(err);
@@ -122,7 +120,7 @@ try{
 if(!oldUser){
   return res.json({ status: "User Not Exists!!" });
 }
-/********************************************* */
+
 const secret = process.env.JWT_SECRET+oldUser.password;
 const token = jwt.sign({ email: oldUser.email, id: oldUser._id }, secret, {
   expiresIn: "5m",
@@ -133,7 +131,7 @@ var transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
     user: process.env.auth_email ,
-    pass: process.env.auth_password,/************** */
+    pass: process.env.auth_password,
   },
 });
 
@@ -142,7 +140,6 @@ var mailOptions = {
   to: email,
   secure: true,
   subject: "Password Reset",
-  //text: link,
   html:
   '<p>Please click on the following link to reset your password:</p>' +
   link,
