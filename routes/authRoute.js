@@ -13,8 +13,7 @@
   let username = req.body.username;
   let email = req.body.email;
   let password = req.body.password;
-  let confirm_password = req.body.confirm_password;
-  if( (username == ""&&email == "") || (username == ""&&password == "") || (username == ""&&confirm_password == "") || (email == ""&&password == "") || (email == ""&&confirm_password == "") || (password == ""&&confirm_password == "")){
+  if( (username == ""&&email == "") || (username == ""&&password == "") || (email == ""&&password == "") ){
     res.json("Fields are required");
   }else if(username == "" ){
     res.json("UserName is required");
@@ -22,17 +21,12 @@
    res.json( "Password is required" );
  }else if(email == "" ){
   res.json( "email is required" );
-}else if(confirm_password == "" ){
-  res.json( "confirm-password is required" );
-}else if(confirm_password !== password) {
- res.json( "confirm-password should be typically like password" );
- }
+}
 else{
     const user = new User({
       username: req.body.username,
       email: req.body.email,
       password: bcrypt.hashSync(req.body.password, 10),
-      confirm_password: confirm_password
     })
 // save user data
     user
